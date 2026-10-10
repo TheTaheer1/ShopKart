@@ -1,34 +1,8 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { getCurrentCustomer } from '../services/api'
 
 function Home() {
-  const [customer, setCustomer] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const loadCustomer = async () => {
-      try {
-        setCustomer(await getCurrentCustomer())
-      } catch {
-        navigate('/login', { replace: true })
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadCustomer()
-  }, [navigate])
-
-  if (isLoading) {
-    return <main className="loading-screen"><p>Loading your ShopKart...</p></main>
-  }
-
-  if (!customer) {
-    return null
-  }
+  const { customer } = useOutletContext()
 
   return (
     <main className="home-page">
@@ -62,7 +36,7 @@ function Home() {
           </dl>
         </article>
 
-        <Link className="button button-primary" to="/">
+        <Link className="button button-primary" to="/products">
           Start exploring <span aria-hidden="true">→</span>
         </Link>
       </section>

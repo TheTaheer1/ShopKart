@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../services/api.js'
+import PasswordInput from '../components/PasswordInput'
 
 function Register() {
     const [form, setForm] = useState({
@@ -12,7 +13,8 @@ function Register() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState('')
-    const [success, setSuccess] = useState('')
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         setForm((prev) => ({
@@ -25,26 +27,34 @@ function Register() {
         e.preventDefault()
 
         setError('')
-        setSuccess('')
+
+        if (!form.fullName.trim() || !form.email.trim() || !form.password || !form.phone.trim()) {
+            setError('Please complete all fields.')
+            return
+        }
+
+        if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+            setError('Please enter a valid email address.')
+            return
+        }
+
+        if (form.password.length < 6) {
+            setError('Password must be at least 6 characters.')
+            return
+        }
+
+        if (!/^\d{10}$/.test(form.phone)) {
+            setError('Phone number must be exactly 10 digits.')
+            return
+        }
+
         setIsSubmitting(true)
 
         try {
-            const response = await api.post('/customers/register', form)
-
-            console.log(response.data)
-
-            setSuccess('User registered successfully!')
-
-            setForm({
-                fullName: '',
-                email: '',
-                password: '',
-                phone: ''
-            })
+            await api.post('/customers/register', form)
+            navigate('/login', { state: { registered: true } })
 
         } catch (error) {
-            console.log(error)
-
             setError(
                 error.response?.data?.message ||
                 'Something went wrong. Please try again.'
@@ -128,14 +138,15 @@ function Register() {
                                 Password
                             </label>
 
-                            <input
+                            <PasswordInput
                                 id="register-password"
                                 name="password"
-                                type="password"
                                 autoComplete="new-password"
                                 value={form.password}
                                 onChange={handleChange}
                                 placeholder="6+ characters"
+                                visible={isPasswordVisible}
+                                onToggle={() => setIsPasswordVisible((visible) => !visible)}
                             />
                         </div>
 
@@ -166,16 +177,6 @@ function Register() {
                             role="alert"
                         >
                             {error}
-                        </p>
-                    )}
-
-                    {/* Success */}
-                    {success && (
-                        <p
-                            className="form-success"
-                            role="status"
-                        >
-                            {success}
                         </p>
                     )}
 

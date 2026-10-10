@@ -7,7 +7,7 @@ import { genToken } from "../utils/generateToken.js";
 const cookiesOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 
@@ -186,7 +186,13 @@ export const getCustomer=async(req,res)=>{
     res.status(200).json({
         message:'Customer Authenticated',
         success:true,
-        customerData:req.user
+        customerData: {
+            _id: req.user._id,
+            fullName: req.user.fullName,
+            email: req.user.email,
+            phone: req.user.phone,
+            isAdmin: req.user.isAdmin
+        }
     })
 }
 

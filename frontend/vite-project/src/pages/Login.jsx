@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { api } from '../services/api.js'
+import PasswordInput from '../components/PasswordInput'
 
 function Login() {
 
@@ -11,6 +12,7 @@ function Login() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState('')
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -32,6 +34,11 @@ function Login() {
         // Remove previous error
         setError('')
 
+        if (!form.email.trim() || !form.password) {
+            setError('Please enter your email and password.')
+            return
+        }
+
         // Start loading
         setIsSubmitting(true)
 
@@ -40,19 +47,16 @@ function Login() {
             // Send login data to backend
             await api.post('/customers/login', form)
 
-            console.log('User Logged in')
-
             // Login successful → go to home page
             navigate('/home')
 
         } catch (error) {
-
-            console.log(error)
-
             // Get error message sent by backend
             setError(
-                error.response?.data?.message ||
-                'Login failed. Please check your email and password.'
+                error.response?.status === 401
+                    ? 'Invalid Credentials'
+                    : error.response?.data?.message ||
+                      'Unable to log in. Please try again.'
             )
 
         } finally {
@@ -131,14 +135,15 @@ function Login() {
                         Password
                     </label>
 
-                    <input
+                    <PasswordInput
                         id="password"
                         name="password"
-                        type="password"
                         autoComplete="current-password"
                         value={form.password}
                         onChange={handleChange}
                         placeholder="Enter your password"
+                        visible={isPasswordVisible}
+                        onToggle={() => setIsPasswordVisible((visible) => !visible)}
                     />
 
 
@@ -180,5 +185,4 @@ function Login() {
 }
 
 export default Login
-
 
