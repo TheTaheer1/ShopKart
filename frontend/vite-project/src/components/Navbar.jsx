@@ -36,7 +36,7 @@ function Navbar() {
         <span>ShopKart</span>
       </Link>
       <button className="menu-toggle" type="button" aria-expanded={isMenuOpen} aria-controls="primary-navigation" aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'} onClick={() => setIsMenuOpen((open) => !open)}>
-        <span /><span /><span />
+        {isMenuOpen ? <span className="menu-close-icon" aria-hidden="true">×</span> : <><span /><span /><span /></>}
       </button>
       <nav id="primary-navigation" className={`nav-links ${isMenuOpen ? 'nav-links-open' : ''}`} aria-label="Primary navigation">
         <Link to="/products">Products</Link>
