@@ -366,6 +366,13 @@ body { color: var(--ink); background: #f5f7fa; }
 .pending-order-actions .button { margin-top: 0; }
 .order-card-summary { min-width: 230px; gap: .85rem; }
 .order-card-summary > a { display: inline-flex; align-items: center; min-height: 32px; }
+.cart-item-info { min-width: 0; }
+.cart-item-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+.cart-item-actions .stock-status { margin: 0; }
+.cart-item-actions .quantity-controls { margin: 0; flex: 0 0 auto; min-height: 42px; background: #fbfcfe; border-color: #d9e0e9; border-radius: 8px; }
+.cart-item-actions .quantity-controls button { width: 42px; height: 40px; }
+.cart-item-actions .quantity-controls span { min-width: 38px; font-size: .9rem; }
+.cart-item .remove-cart-button { margin-top: .9rem; font-size: .78rem; }
 .cancel-order-button { min-height: 38px; padding: .65rem .8rem; border: 1px solid rgba(239, 116, 104, .42); border-radius: 8px; background: #fff5f3; color: #c4544b; cursor: pointer; font: 600 .72rem/1 var(--mono); transition: background .2s, border-color .2s, color .2s, transform .2s; }
 .cancel-order-button:hover { border-color: var(--warning); background: #ffe9e5; color: #a63f38; transform: translateY(-1px); text-decoration: none; }
 .cancel-order-button:disabled { cursor: wait; opacity: .6; }
@@ -378,6 +385,10 @@ body { color: var(--ink); background: #f5f7fa; }
 .not-found-actions { display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap; margin-top: 2rem; }
 .not-found-actions .button { display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 11rem; height: 46px; min-height: 46px; margin-top: 0; padding: 0 1.1rem; font-size: .82rem; line-height: 1.2; text-decoration: none; }
 .not-found-secondary { display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 11rem; height: 46px; max-height: 46px; padding: 0 1.1rem; border: 0; border-radius: 9px; background: #edf1f7; color: #536174; font: 700 .82rem/1.2 'Manrope', sans-serif; text-decoration: none; }
+@media (max-width: 760px) {
+  .cart-item-actions { align-items: flex-start; flex-direction: column; gap: .7rem; }
+  .cart-item-actions .quantity-controls { align-self: flex-start; }
+}
 .not-found-secondary:hover { background: #e3eaf5; color: var(--navy); }
 @media (max-width: 560px) { .not-found-actions { flex-direction: column; } .not-found-actions .button, .not-found-secondary { width: 100%; } }
 

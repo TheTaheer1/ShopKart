@@ -36,11 +36,13 @@ function CartItem({ item, onUpdateQuantity, onRemove }) {
         <p className="product-category">{product.category}</p>
         <h2>{product.name}</h2>
         <p className="cart-item-price">₹{price.toLocaleString('en-IN')}</p>
-        <p className={product.stock > 0 ? 'stock-status' : 'stock-status out-of-stock'}>{product.stock} units available</p>
-        <div className="quantity-controls" aria-label={`Quantity for ${product.name}`}>
-          <button type="button" onClick={() => changeQuantity(item.quantity - 1)} disabled={isUpdating || item.quantity <= 1} aria-label={`Decrease ${product.name} quantity`}>−</button>
-          <span aria-live="polite">{item.quantity}</span>
-          <button type="button" onClick={() => changeQuantity(item.quantity + 1)} disabled={isUpdating || item.quantity >= product.stock} aria-label={`Increase ${product.name} quantity`}>+</button>
+        <div className="cart-item-actions">
+          <p className={product.stock > 0 ? 'stock-status' : 'stock-status out-of-stock'}>{product.stock} units available</p>
+          <div className="quantity-controls" aria-label={`Quantity for ${product.name}`}>
+            <button type="button" onClick={() => changeQuantity(item.quantity - 1)} disabled={isUpdating || item.quantity <= 1} aria-label={`Decrease ${product.name} quantity`}>−</button>
+            <span aria-live="polite">{item.quantity}</span>
+            <button type="button" onClick={() => changeQuantity(item.quantity + 1)} disabled={isUpdating || item.quantity >= product.stock} aria-label={`Increase ${product.name} quantity`}>+</button>
+          </div>
         </div>
         <button className="remove-cart-button" type="button" onClick={remove} disabled={isUpdating}>{isUpdating ? 'Updating...' : 'Remove'}</button>
         {error && <p className="wishlist-error" role="alert">{error}</p>}
