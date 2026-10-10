@@ -455,9 +455,16 @@ body { color: var(--ink); background: #f5f7fa; }
   box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
 }
 .home-page .logout-button { margin-left: .35rem; padding: .55rem .7rem; border-radius: 7px; }
+.mobile-bottom-nav { display: none; }
 @media (max-width: 760px) {
   .home-page::before { width: 25rem; height: 25rem; right: -15rem; top: 18rem; }
   .home-content h1 { max-width: 25rem; font-size: clamp(3.3rem, 15vw, 5.2rem); }
   .profile-card { margin-top: 3.5rem; padding: 1.5rem; }
   .home-content > .button-primary { width: 100%; }
+  .mobile-bottom-nav { position: fixed; display: grid; grid-template-columns: repeat(4, 1fr); left: 0; right: 0; bottom: 0; z-index: 120; padding: .45rem .5rem calc(.45rem + env(safe-area-inset-bottom)); background: rgba(255, 255, 255, .96); border-top: 1px solid #dfe5ec; box-shadow: 0 -8px 24px rgba(16, 24, 40, .1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .mobile-bottom-link { display: grid; justify-items: center; gap: .15rem; min-width: 0; padding: .35rem .15rem; color: #64748b; text-decoration: none; border-radius: 9px; transition: color .2s, background .2s; }
+  .mobile-bottom-link span { font-size: 1.2rem; line-height: 1; }
+  .mobile-bottom-link small { overflow: hidden; max-width: 100%; font-size: .62rem; font-weight: 800; white-space: nowrap; text-overflow: ellipsis; }
+  .mobile-bottom-link-active { color: var(--accent-dark); background: var(--accent-soft); }
+  .catalog-page, .home-page { padding-bottom: 5.5rem; }
 }

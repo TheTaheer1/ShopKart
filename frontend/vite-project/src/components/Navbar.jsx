@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useOutletContext } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useOutletContext } from 'react-router-dom'
 import { logoutCustomer } from '../services/api'
 import { useCart } from '../store/useCart'
 import { useWishlist } from '../store/useWishlist'
@@ -45,6 +45,12 @@ function Navbar() {
         <Link to="/orders">Orders</Link>
         {customer?.isAdmin && <Link to="/products/new">Add product</Link>}
         {customer?.isAdmin && <Link to="/admin/orders">Admin orders</Link>}
+      </nav>
+      <nav className="mobile-bottom-nav" aria-label="Quick navigation">
+        <NavLink to="/products" className={({ isActive }) => isActive ? 'mobile-bottom-link mobile-bottom-link-active' : 'mobile-bottom-link'}><span aria-hidden="true">⌂</span><small>Products</small></NavLink>
+        <NavLink to="/wishlist" className={({ isActive }) => isActive ? 'mobile-bottom-link mobile-bottom-link-active' : 'mobile-bottom-link'}><span aria-hidden="true">♡</span><small>Wishlist{wishlistCount > 0 ? ` (${wishlistCount})` : ''}</small></NavLink>
+        <NavLink to="/cart" className={({ isActive }) => isActive ? 'mobile-bottom-link mobile-bottom-link-active' : 'mobile-bottom-link'}><span aria-hidden="true">▣</span><small>Cart{totalItems > 0 ? ` (${totalItems})` : ''}</small></NavLink>
+        <NavLink to="/orders" className={({ isActive }) => isActive ? 'mobile-bottom-link mobile-bottom-link-active' : 'mobile-bottom-link'}><span aria-hidden="true">▤</span><small>Orders</small></NavLink>
       </nav>
       <button className="button button-quiet logout-button" type="button" onClick={handleLogout}>
         Log out <span aria-hidden="true">↗</span>
