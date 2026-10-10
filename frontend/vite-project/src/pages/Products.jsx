@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Navbar from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
 import { getProducts } from '../services/api'
+import { getInitialProducts } from '../services/productCache'
 import { useWishlist } from '../store/useWishlist'
 
 const categories = ['Beauty', 'Electronics', 'Fashion', 'Books', 'Home']
@@ -24,7 +25,7 @@ const sortProducts = (items, selectedSort) => {
 }
 
 function Products() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState(() => getInitialProducts() || [])
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
   const [sort, setSort] = useState('')
@@ -37,6 +38,10 @@ function Products() {
     let isCurrentRequest = true
 
     const loadProducts = async () => {
+      if (!search && !category && !sort && getInitialProducts()) {
+        setIsLoading(false)
+        return
+      }
       setIsLoading(true)
       setHasError(false)
 
