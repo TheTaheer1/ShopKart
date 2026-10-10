@@ -432,6 +432,21 @@ body { color: var(--ink); background: #f5f7fa; }
 .home-content > .button-primary { width: fit-content; min-width: 10.5rem; margin-top: 2rem; border-radius: 9px; }
 .home-page .navbar { box-shadow: 0 1px 0 rgba(255, 255, 255, .03); }
 .home-page .nav-links a { padding: .55rem .7rem; border-radius: 7px; }
+
+/* Keep primary shopping navigation available while browsing long pages. */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 8px 24px rgba(16, 24, 40, .06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.home-page .navbar {
+  background: rgba(23, 33, 43, .78);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
 .home-page .logout-button { margin-left: .35rem; padding: .55rem .7rem; border-radius: 7px; }
 @media (max-width: 760px) {
   .home-page::before { width: 25rem; height: 25rem; right: -15rem; top: 18rem; }
