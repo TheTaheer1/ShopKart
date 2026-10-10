@@ -63,7 +63,7 @@ function NewProduct() {
           <label>Product name<input name="name" value={form.name} onChange={handleChange} required /></label>
           <label>Category
             <select name="category" value={form.category} onChange={handleChange}>
-              <option>Electronics</option><option>Fashion</option><option>Books</option><option>Home</option>
+              <option>Beauty</option><option>Electronics</option><option>Fashion</option><option>Books</option><option>Home</option>
             </select>
           </label>
           <label className="form-wide">Description<textarea name="description" value={form.description} onChange={handleChange} required rows="4" /></label>

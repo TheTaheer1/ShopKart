@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard'
 import { getProducts } from '../services/api'
 import { useWishlist } from '../store/useWishlist'
 
-const categories = ['Electronics', 'Fashion', 'Books', 'Home']
+const categories = ['Beauty', 'Electronics', 'Fashion', 'Books', 'Home']
 
 const sortProducts = (items, selectedSort) => {
   const sorted = [...items]
