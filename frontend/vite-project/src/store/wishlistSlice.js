@@ -12,12 +12,15 @@ const wishlistSlice = createSlice({
   initialState: { items: [], loading: true, error: '' },
   reducers: {},
   extraReducers: (builder) => {
-    const pending = (state) => { state.loading = true; state.error = '' }
+    // Keep saved products rendered while add/remove requests are in flight.
+    // `loading` only represents the initial wishlist fetch.
+    const fetchPending = (state) => { state.loading = true; state.error = '' }
+    const mutationPending = (state) => { state.error = '' }
     const fulfilled = (state, action) => { state.loading = false; state.items = action.payload }
     const rejected = (fallback) => (state, action) => { state.loading = false; state.error = action.payload || fallback }
-    builder.addCase(fetchWishlist.pending, pending).addCase(fetchWishlist.fulfilled, fulfilled).addCase(fetchWishlist.rejected, rejected("We couldn't load your wishlist."))
-      .addCase(addToWishlist.pending, pending).addCase(addToWishlist.fulfilled, fulfilled).addCase(addToWishlist.rejected, rejected('Unable to save product. Please try again.'))
-      .addCase(removeFromWishlist.pending, pending).addCase(removeFromWishlist.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter((product) => product._id !== action.meta.arg) }).addCase(removeFromWishlist.rejected, rejected('Unable to remove product. Please try again.'))
+    builder.addCase(fetchWishlist.pending, fetchPending).addCase(fetchWishlist.fulfilled, fulfilled).addCase(fetchWishlist.rejected, rejected("We couldn't load your wishlist."))
+      .addCase(addToWishlist.pending, mutationPending).addCase(addToWishlist.fulfilled, fulfilled).addCase(addToWishlist.rejected, rejected('Unable to save product. Please try again.'))
+      .addCase(removeFromWishlist.pending, mutationPending).addCase(removeFromWishlist.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter((product) => product._id !== action.meta.arg) }).addCase(removeFromWishlist.rejected, rejected('Unable to remove product. Please try again.'))
   }
 })
 

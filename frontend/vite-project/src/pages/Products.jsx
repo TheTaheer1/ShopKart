@@ -95,10 +95,11 @@ function Products() {
           </label>
         </div>
 
-        {isLoading && <p className="catalog-message">Loading products...</p>}
-        {!isLoading && hasError && <p className="catalog-message error-message">Something went wrong while loading products.</p>}
+        {isLoading && products.length === 0 && <p className="catalog-message">Loading products...</p>}
+        {isLoading && products.length > 0 && <p className="catalog-refreshing" role="status" aria-live="polite">Updating products…</p>}
+        {!isLoading && hasError && products.length === 0 && <p className="catalog-message error-message">Something went wrong while loading products.</p>}
         {!isLoading && !hasError && visibleProducts.length === 0 && <p className="catalog-message">No products found.</p>}
-        {!isLoading && !hasError && visibleProducts.length > 0 && (
+        {visibleProducts.length > 0 && (
           <div className="product-grid">
             {visibleProducts.map((product) => (
               <ProductCard

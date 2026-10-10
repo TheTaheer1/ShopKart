@@ -29,7 +29,7 @@ function Wishlist() {
         </div>
 
         {isLoading && <p className="catalog-message">Loading your wishlist...</p>}
-        {!isLoading && wishlistError && (
+        {!isLoading && wishlistError && wishlist.length === 0 && (
           <div className="wishlist-state">
             <h2>Something went wrong.</h2>
             <p>We couldn't load your wishlist.</p>
@@ -44,11 +44,12 @@ function Wishlist() {
             <Link className="button button-primary" to="/products">Browse Products <span aria-hidden="true">→</span></Link>
           </div>
         )}
-        {!isLoading && !wishlistError && wishlist.length > 0 && (
+        {wishlist.length > 0 && (
           <div className="product-grid">
             {wishlist.map((product) => <WishlistCard key={product._id} product={product} onRemove={handleRemove} />)}
           </div>
         )}
+        {!isLoading && wishlistError && wishlist.length > 0 && <p className="catalog-refreshing" role="alert">{wishlistError}</p>}
       </section>
     </main>
   )
