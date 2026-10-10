@@ -38,7 +38,10 @@ function AdminOrders() {
       {orders.length > 0 && <div className="admin-orders-list">{orders.map((order) => <article className="admin-order-card" key={order._id}>
         <div className="admin-order-topline"><div><p className="product-category">ORDER #{order._id.slice(-8).toUpperCase()}</p><h2>{order.user?.fullName || 'Unknown customer'}</h2><p className="admin-customer-email">{order.user?.email || 'No email available'}</p></div><div className="admin-order-badges"><span className="order-status">{formatStatus(order.status)}</span><span className="payment-status">{formatStatus(order.paymentStatus)}</span></div></div>
         <div className="admin-order-grid"><div><span>Placed</span><strong>{new Date(order.createdAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</strong></div><div><span>Items</span><strong>{order.items.reduce((total, item) => total + item.quantity, 0)}</strong></div><div><span>Total</span><strong>₹{order.totalAmount.toLocaleString('en-IN')}</strong></div><div><span>Ship to</span><strong>{order.shippingAddress.city}, {order.shippingAddress.state}</strong></div></div>
-        <div className="admin-order-items">{order.items.map((item) => <span key={`${order._id}-${item.product}`}>{item.name} × {item.quantity}</span>)}</div>
+        <div className="admin-order-items">{order.items.map((item) => <article className="admin-order-item" key={`${order._id}-${item.product}`}>
+          {item.image ? <img src={item.image} alt="" /> : <span className="admin-order-item-placeholder" aria-hidden="true">S</span>}
+          <span>{item.name} × {item.quantity}</span>
+        </article>)}</div>
         <details className="admin-order-details"><summary>View shipping details</summary><p>{order.shippingAddress.fullName} · {order.shippingAddress.phone}<br />{order.shippingAddress.addressLine1}, {order.shippingAddress.city}, {order.shippingAddress.state} — {order.shippingAddress.pincode}</p></details>
       </article>)}</div>}
       {!isLoading && error && orders.length > 0 && <p className="catalog-refreshing" role="status">We couldn’t refresh orders. Showing the last loaded list.</p>}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { logoutCustomer } from '../services/api'
 import { useCart } from '../store/useCart'
@@ -9,7 +9,13 @@ function Navbar() {
   const { customer } = useOutletContext()
   const { totalItems } = useCart()
   const { wishlistCount } = useWishlist()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(() => {
+    try { return sessionStorage.getItem('shopkart-mobile-nav') === 'open' } catch { return false }
+  })
+
+  useEffect(() => {
+    try { sessionStorage.setItem('shopkart-mobile-nav', isMenuOpen ? 'open' : 'closed') } catch { /* storage may be unavailable */ }
+  }, [isMenuOpen])
 
   const handleLogout = async () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?')
@@ -18,6 +24,7 @@ function Navbar() {
     try {
       await logoutCustomer()
     } finally {
+      setIsMenuOpen(false)
       navigate('/login', { replace: true })
     }
   }
@@ -32,12 +39,12 @@ function Navbar() {
         <span /><span /><span />
       </button>
       <nav id="primary-navigation" className={`nav-links ${isMenuOpen ? 'nav-links-open' : ''}`} aria-label="Primary navigation">
-        <Link onClick={() => setIsMenuOpen(false)} to="/products">Products</Link>
-        <Link onClick={() => setIsMenuOpen(false)} to="/wishlist">Wishlist ({wishlistCount})</Link>
-        <Link onClick={() => setIsMenuOpen(false)} to="/cart">Cart ({totalItems})</Link>
-        <Link onClick={() => setIsMenuOpen(false)} to="/orders">Orders</Link>
-        {customer?.isAdmin && <Link onClick={() => setIsMenuOpen(false)} to="/products/new">Add product</Link>}
-        {customer?.isAdmin && <Link onClick={() => setIsMenuOpen(false)} to="/admin/orders">Admin orders</Link>}
+        <Link to="/products">Products</Link>
+        <Link to="/wishlist">Wishlist ({wishlistCount})</Link>
+        <Link to="/cart">Cart ({totalItems})</Link>
+        <Link to="/orders">Orders</Link>
+        {customer?.isAdmin && <Link to="/products/new">Add product</Link>}
+        {customer?.isAdmin && <Link to="/admin/orders">Admin orders</Link>}
       </nav>
       <button className="button button-quiet logout-button" type="button" onClick={handleLogout}>
         Log out <span aria-hidden="true">↗</span>
