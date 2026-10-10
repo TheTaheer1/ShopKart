@@ -468,8 +468,8 @@ body { color: var(--ink); background: #f5f7fa; }
   .mobile-bottom-link small { overflow: hidden; max-width: 100%; font-size: .62rem; font-weight: 800; white-space: nowrap; text-overflow: ellipsis; }
   .mobile-bottom-link-active { color: var(--accent-dark); background: var(--accent-soft); }
   .catalog-page, .home-page { padding-bottom: 5.5rem; }
-  .menu-toggle { display: grid; place-items: center; width: 40px; height: 40px; margin-left: auto; padding: 0; border: 0; border-radius: 8px; background: transparent !important; color: var(--ink); }
-  .menu-toggle span:not(.menu-close-icon) { width: 20px; height: 2px; margin: 2px 0; background: currentColor; }
-  .menu-toggle .menu-close-icon { display: block; width: auto; height: auto; margin: 0; background: transparent !important; font-size: 1.7rem; line-height: 1; }
+  .menu-toggle { display: grid; place-items: center; width: 34px; height: 38px; margin-left: auto; padding: 0; border: 0; border-radius: 8px; background: transparent !important; color: var(--ink); }
+  .menu-toggle span:not(.menu-close-icon) { width: 16px; height: 2px; margin: 1.5px 0; background: currentColor; }
+  .menu-toggle .menu-close-icon { display: block; width: auto; height: auto; margin: 0; background: transparent !important; font-size: 1.5rem; line-height: 1; }
   .home-page .menu-toggle { color: #e7ebf2; }
 }
